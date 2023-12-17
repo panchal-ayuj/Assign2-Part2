@@ -74,10 +74,32 @@ public class PdfGenerator {
             // Convert BufferedImage to iTextPDF Image
             Image itextImage5 = new Image(ImageDataFactory.create(bufferedImage5, null));
 
+            JFreeChart chart6 = ChartGenerator.maxInterviewBarChart();
+
+            // Convert JFreeChart to BufferedImage
+            int width6= 600; // set width of the image
+            int height6 = 700; // set height of the image
+            BufferedImage bufferedImage6 = chart6.createBufferedImage(width6, height6);
+
+            // Convert BufferedImage to iTextPDF Image
+            Image itextImage6 = new Image(ImageDataFactory.create(bufferedImage6, null));
+
+            JFreeChart chart7 = ChartGenerator.minInterviewBarChart();
+
+            // Convert JFreeChart to BufferedImage
+            int width7= 600; // set width of the image
+            int height7 = 700; // set height of the image
+            BufferedImage bufferedImage7 = chart7.createBufferedImage(width7, height7);
+
+            // Convert BufferedImage to iTextPDF Image
+            Image itextImage7 = new Image(ImageDataFactory.create(bufferedImage7, null));
+
 
             // Add content to the PDF
             document.add(itextImage);
             document.add(itextImage2);
+            document.add(itextImage6);
+            document.add(itextImage7);
             document.add(itextImage3);
             document.add(itextImage4);
             document.add(itextImage5);

@@ -1,4 +1,5 @@
 package com.example.part2;
+import org.apache.xpath.operations.Neg;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -204,6 +205,100 @@ public class ChartGenerator {
         }
 
         return top3Skills;
+    }
+
+
+    public static JFreeChart maxInterviewBarChart() {
+        Map <String,Integer> map = getMaxInterviewsByTeam();
+        DefaultCategoryDataset dataset = createMaxInterviewByTeamDataset(map);
+        JFreeChart barChart = createBarChartMaxInterviews(dataset);
+        return barChart;
+    }
+
+    private static Map<String, Integer> getMaxInterviewsByTeam(){
+        Map<String, Integer> map = new HashMap<>();
+
+        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/assignment2", "root", "ayuj6240")) {
+            String sql = "SELECT team, COUNT(*) AS totalInterviews from interviewTable WHERE intMonth in ('Oct-23', 'Nov-23') GROUP BY team ORDER BY totalInterviews DESC LIMIT 1";
+            try(PreparedStatement statement = connection.prepareStatement(sql)) {
+                try(ResultSet resultSet = statement.executeQuery()) {
+                    if(resultSet.next()) {
+                        String team = resultSet.getString("team");
+                        int totalInterviews = resultSet.getInt("totalInterviews");
+                        map.put(team, totalInterviews);
+                    }
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    private static DefaultCategoryDataset createMaxInterviewByTeamDataset(Map<String,Integer> map){
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        map.forEach((team, totalInterviews) -> dataset.addValue(totalInterviews, "Interviews", team));
+        return dataset;
+    }
+
+    private static JFreeChart createBarChartMaxInterviews(DefaultCategoryDataset dataset) {
+        JFreeChart barChart = ChartFactory.createBarChart(
+          "Team with Max interviews - Oct/Nov 2023",
+          "Team",
+          "Number of Interviews",
+          dataset
+        );
+
+        barChart.setBackgroundPaint(Color.WHITE);
+        return barChart;
+    }
+
+
+    public static JFreeChart minInterviewBarChart() {
+        Map <String,Integer> map = getMinInterviewsByTeam();
+        DefaultCategoryDataset dataset = createMinInterviewByTeamDataset(map);
+        JFreeChart barChart = createBarChartMinInterviews(dataset);
+        return barChart;
+    }
+
+    private static Map<String, Integer> getMinInterviewsByTeam(){
+        Map<String, Integer> map = new HashMap<>();
+
+        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/assignment2", "root", "ayuj6240")) {
+            String sql = "SELECT team, COUNT(*) AS totalInterviews from interviewTable WHERE intMonth in ('Oct-23', 'Nov-23') GROUP BY team ORDER BY totalInterviews LIMIT 1";
+            try(PreparedStatement statement = connection.prepareStatement(sql)) {
+                try(ResultSet resultSet = statement.executeQuery()) {
+                    if(resultSet.next()) {
+                        String team = resultSet.getString("team");
+                        int totalInterviews = resultSet.getInt("totalInterviews");
+                        map.put(team, totalInterviews);
+                    }
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    private static DefaultCategoryDataset createMinInterviewByTeamDataset(Map<String,Integer> map){
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        map.forEach((team, totalInterviews) -> dataset.addValue(totalInterviews, "Interviews", team));
+        return dataset;
+    }
+
+    private static JFreeChart createBarChartMinInterviews(DefaultCategoryDataset dataset) {
+        JFreeChart barChart = ChartFactory.createBarChart(
+                "Team with Min interviews - Oct/Nov 2023",
+                "Team",
+                "Number of Interviews",
+                dataset
+        );
+
+        barChart.setBackgroundPaint(Color.WHITE);
+        return barChart;
     }
 
 }
