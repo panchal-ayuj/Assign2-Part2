@@ -26,14 +26,61 @@ public class PdfGenerator {
 
             // Convert JFreeChart to BufferedImage
             int width = 600; // set width of the image
-            int height = 400; // set height of the image
+            int height = 700; // set height of the image
             BufferedImage bufferedImage = chart.createBufferedImage(width, height);
 
             // Convert BufferedImage to iTextPDF Image
             Image itextImage = new Image(ImageDataFactory.create(bufferedImage, null));
 
+
+            JFreeChart chart2 = ChartGenerator.generatePieChart(data);
+
+            // Convert JFreeChart to BufferedImage
+            int width2 = 600; // set width of the image
+            int height2 = 700; // set height of the image
+            BufferedImage bufferedImage2 = chart2.createBufferedImage(width2, height2);
+
+            // Convert BufferedImage to iTextPDF Image
+            Image itextImage2 = new Image(ImageDataFactory.create(bufferedImage2, null));
+
+
+            JFreeChart chart3 = ChartGenerator.createBarChart(data);
+
+            // Convert JFreeChart to BufferedImage
+            int width3 = 600; // set width of the image
+            int height3 = 700; // set height of the image
+            BufferedImage bufferedImage3 = chart3.createBufferedImage(width3, height3);
+
+            // Convert BufferedImage to iTextPDF Image
+            Image itextImage3 = new Image(ImageDataFactory.create(bufferedImage3, null));
+
+            JFreeChart chart4 = ChartGenerator.top3SkillsPieChart();
+
+            // Convert JFreeChart to BufferedImage
+            int width4 = 600; // set width of the image
+            int height4 = 700; // set height of the image
+            BufferedImage bufferedImage4 = chart4.createBufferedImage(width4, height4);
+
+            // Convert BufferedImage to iTextPDF Image
+            Image itextImage4 = new Image(ImageDataFactory.create(bufferedImage4, null));
+
+            JFreeChart chart5 = ChartGenerator.top3SkillsPeakTimePieChart();
+
+            // Convert JFreeChart to BufferedImage
+            int width5 = 600; // set width of the image
+            int height5 = 700; // set height of the image
+            BufferedImage bufferedImage5 = chart5.createBufferedImage(width5, height5);
+
+            // Convert BufferedImage to iTextPDF Image
+            Image itextImage5 = new Image(ImageDataFactory.create(bufferedImage5, null));
+
+
             // Add content to the PDF
             document.add(itextImage);
+            document.add(itextImage2);
+            document.add(itextImage3);
+            document.add(itextImage4);
+            document.add(itextImage5);
         }
     }
 }

@@ -153,6 +153,10 @@ public class Part2Application {
 
 			JFreeChart chart = ChartGenerator.createChart(dataList);
 
+			JFreeChart pieChart = ChartGenerator.generatePieChart(dataList);
+
+			JFreeChart barChart = ChartGenerator.createBarChart(dataList);
+
 			// Step 5: Generate PDF and embed charts
 			PdfGenerator.generatePdf(dataList, "C:\\Users\\panchal.kumar\\IdeaProjects\\part2\\src\\main\\resources\\Output.pdf");
 
